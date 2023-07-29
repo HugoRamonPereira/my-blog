@@ -4,8 +4,9 @@ import { useState } from 'react';
 import IconButton from '../../buttons/iconButton';
 import InputBase, { InputBaseProps } from '../inputBase';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { FieldValues } from 'react-hook-form';
 
-function InputPassword( props : InputBaseProps ) {
+function InputPassword<T extends FieldValues>( props : InputBaseProps<T> ) {
 	const [showPassword, setShowPassword] = useState(false);
 
 	function handleClickShowPassword() {
