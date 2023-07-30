@@ -1,26 +1,29 @@
 import { Container } from '@mui/material';
 import { Box } from '@mui/material';
+import { ReactNode } from 'react';
+import * as Styled from './styles';
 
-const Form = ({ children }: { children: React.ReactNode }) => {
+interface FormProps {
+  children: ReactNode | ReactNode[];
+  onSubmit: () => void;
+}
+
+const Form = ({ children, ...props }: FormProps) => {
 	return (
-		<Container maxWidth='sm'>
+		<Container maxWidth="sm">
 			<Box
 				component="form"
+				{...props}
 				sx={{
 					'& .MuiTextField-root': {
 						m: 1,
-						width: '25ch',
-						display: 'flex',
-						flexDirection: 'column'
-					}
+						width: '35ch'
+					},
 				}}
-				noValidate
-				autoComplete="off"
 			>
-				<div>
+				<Styled.PaperForm>
 					{children}
-
-				</div>
+				</Styled.PaperForm>
 			</Box>
 		</Container>
 	);

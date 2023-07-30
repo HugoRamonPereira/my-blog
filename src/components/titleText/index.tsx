@@ -1,10 +1,10 @@
-import Typography from '@mui/material/Typography';
+import { Typography, TypographyProps } from '@mui/material';
 
-const TitleText = () => {
+const TitleText = ({ children, ...props }: TypographyProps) => {
 	return (
-		<>
-			<Typography />
-		</>
+		<Typography {...props}>
+			{children}
+		</Typography>
 	);
 };
 
