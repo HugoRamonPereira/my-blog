@@ -33,7 +33,7 @@ const signUpFormSchema = z.object({
 });
 
 export default function Signup() {
-	const { Post, responseRequest } = useHttp({ url: 'auth/signUp' });
+	const { Post, isLoading } = useHttp({ url: 'auth/signUp' });
 	const router = useRouter();
 	const { handleSubmit, control, formState, reset } = useForm<SignUpProps>({
 		resolver: zodResolver(signUpFormSchema),
@@ -49,18 +49,14 @@ export default function Signup() {
 	console.log(formState);
 
 	async function onSubmit(data: SignUpProps){
-		console.log(data);
-		await Post({ body: {...data} });
-		reset();
+		const response = await Post({ body: {...data} });
 
-		console.error('response:', responseRequest);
-
-		if(responseRequest) {
+		if(response) {
 			toast.success('Account created successfully!');
+			reset();
 			router.push('/');
 			return;
 		}
-		toast.error('An error ocurred!');
 	}
 
 	return (
@@ -104,6 +100,7 @@ export default function Signup() {
 				variant="contained"
 				size='large'
 				type='submit'
+				disabled={isLoading}
 			>
             Sign up
 			</CustomButton>

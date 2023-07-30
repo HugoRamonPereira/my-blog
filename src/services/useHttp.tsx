@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 type Payload = Record<string, string | number | boolean>
 
@@ -9,6 +10,10 @@ interface SendHttpRequestProps {
   params?: Payload;
   pathParams?: string;
   method: Method.GET | Method.POST | Method.PUT | Method.DELETE;
+}
+
+interface ErrorResponse {
+  message: string
 }
 
 interface UseHttpProps {
@@ -21,6 +26,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 function useHttp<T>({ url }: UseHttpProps) {
 	const [responseRequest, setResponseRequest] = useState<T | null>(null);
+	const [isLoading, setIsLoading] = useState(false);
 
 	function makeParams({params}:Pick<SendHttpRequestProps,'params'>){
 		if(!params) return '';
@@ -36,67 +42,55 @@ function useHttp<T>({ url }: UseHttpProps) {
 
 	async function sendHttpRequest({ body, method, pathParams, params }: SendHttpRequestProps){
 		try {
+			setIsLoading(true);
+			setResponseRequest(null);
 			const requestBody = body ? {body: JSON.stringify(body)} : {};
 
 			const response = await fetch(`${baseUrl}/${url}${pathParams? `/${pathParams}` : ''}${makeParams({params})}`,{
 				method: method,
 				...requestBody,
-				mode: 'cors',
 				headers: {
-					'Content-Type': 'application/json; charset=utf8',
-					'Access-Control-Allow-Origin': '*',
-					'Access-Control-Allow-Credentials': 'true',
-					'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE', 'Access-Control-Allow-Headers': 'Content-Type'
+					'Content-Type': 'application/json',
 				}
 			});
 
 			if(!response.ok) {
-				throw new Error('Something went wrong');
+				const responseJson = await response.json();
+				throw new Error(responseJson.message ||  responseJson.error);
 			}
 
 			const responseJson = await response.json();
 
 			setResponseRequest(responseJson);
-		} catch(error: {message: string}) {
-			console.log('error:', error);
+			return responseJson;
 
+		} catch(error) {
+			toast.error((error as ErrorResponse).message);
 			setResponseRequest(null);
+			return null;
 		}
-
-
-		// fetch(`${baseUrl}/${url}${pathParams? `/${pathParams}` :''}${makeParams({params})}`, {
-		// 	method: method,
-		// 	...requestBody,
-		// 	headers: {'Content-Type': 'application/json; charset=utf-8' }
-		// })
-		// 	.then((response) => {
-		// 		if (!response.ok) {
-		// 			throw new Error('Something went wrong!');
-		// 		}
-		// 		return response.json();
-		// 	})
-		// 	.then((response) => {
-		// 		setResponseRequest(response);
-		// 	})
-		// 	.catch((error) => {
-		// 		errorRef.current = error.message;
-		// 		setResponseRequest(null);
-		// 	});
+		finally {
+			setIsLoading(false);
+		}
 	}
 
 	async function Get({ params,pathParams }: Pick<SendHttpRequestProps,'params'|'pathParams'>){
-		await sendHttpRequest({
+		const response = await sendHttpRequest({
 			method: Method.GET,
 			params,
 			pathParams
 		});
+
+		return response;
 	}
 
 	async function Post({ body }: Pick<SendHttpRequestProps, 'body'>){
-		await sendHttpRequest({
+		const response = await sendHttpRequest({
 			method: Method.POST,
 			body
 		});
+
+		return response;
 	}
 
 	// Put needs a pathParams and a body
@@ -107,7 +101,7 @@ function useHttp<T>({ url }: UseHttpProps) {
 	// Delete needs only pathParams which contains the id of the post to be deleted
 	async function Delete(){}
 
-	return {responseRequest, sendHttpRequest, Get, Post, Put, Delete};
+	return {responseRequest, isLoading, Get, Post, Put, Delete};
 }
 
 export default useHttp;
