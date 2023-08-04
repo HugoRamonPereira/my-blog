@@ -11,37 +11,40 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-hot-toast';
+import { useAuth } from '@/contexts/auth';
 
 interface SignInProps {
-  email: string;
+  username: string;
   password: string;
 }
 
 const signInFormSchema = z.object({
-	email: z.string().email(),
+	username: z.string(),
 	password: z.string().min(3).max(20)
 });
 
-export default function Home() {
-	const { Get, errorRequest } = useHttp({ url: 'auth/signIn' });
-	const { handleSubmit, control, formState } = useForm<SignInProps>({
+export default function SignIn() {
+	const auth = useAuth();
+	const { Post, isLoading } = useHttp({ url: 'auth/signIn' });
+	const { handleSubmit, control, reset } = useForm<SignInProps>({
 		resolver: zodResolver(signInFormSchema),
 		defaultValues: {
-			email: 'ramone.techie@gmail.com'
+			username: 'caioluan010',
+			password: 'Caio@123'
 		}
 	});
 
-	console.log(formState);
-
 	async function onSubmit(data: SignInProps) {
-		console.log(data);
-		await Get(data);
+		const response = await Post({ body: {...data} });
 
-		if(!errorRequest) {
+		if(response.access_token){
 			toast.success('Login successful!');
+			auth.signIn(response);
+			reset();
 			return;
 		}
-		toast.error('Some sort of error ocurred!');
+
+		toast.error('Login failed!');
 	}
 
 	return (
@@ -57,8 +60,8 @@ export default function Home() {
           Welcome
 			</TitleText>
 			<InputBase
-				label='Email'
-				name='email'
+				label='Username'
+				name='username'
 				control={control}
 			/>
 			<InputPassword
@@ -75,6 +78,7 @@ export default function Home() {
 				variant="contained"
 				size='large'
 				type='submit'
+				disabled={isLoading}
 			>
           Sign in
 			</CustomButton>
