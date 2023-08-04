@@ -32,10 +32,10 @@ const signUpFormSchema = z.object({
 	path: ['confirmPassword']
 });
 
-export default function Signup() {
+export default function SignUp() {
 	const { Post, isLoading } = useHttp({ url: 'auth/signUp' });
 	const router = useRouter();
-	const { handleSubmit, control, formState, reset } = useForm<SignUpProps>({
+	const { handleSubmit, control, reset } = useForm<SignUpProps>({
 		resolver: zodResolver(signUpFormSchema),
 		defaultValues: {
 			fullName: 'ramon',
@@ -45,8 +45,6 @@ export default function Signup() {
 			confirmPassword: '0123456789'
 		}
 	});
-
-	console.log(formState);
 
 	async function onSubmit(data: SignUpProps){
 		const response = await Post({ body: {...data} });

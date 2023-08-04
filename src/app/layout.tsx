@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Lexend } from 'next/font/google';
 import '../styles/global.css';
 import Toaster from '@/components/toaster';
+import ProtectRoute from '@/utils/hooks/protectRoute';
+import AuthProvider from '@/contexts/auth';
 
 const lexend = Lexend({ subsets: ['latin'] });
 
@@ -13,13 +15,15 @@ export const metadata: Metadata = {
 export default function RootLayout({
 	children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
 	return (
 		<html lang="en">
 			<body className={lexend.className}>
 				<Toaster />
-				{children}
+				<AuthProvider>
+					<ProtectRoute>{children}</ProtectRoute>
+				</AuthProvider>
 			</body>
 		</html>
 	);
