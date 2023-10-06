@@ -1,3 +1,10 @@
 body {
   background: #e1f5fe;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }

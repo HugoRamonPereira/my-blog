@@ -1,10 +1,11 @@
-import { Typography, TypographyProps } from '@mui/material';
+import { TypographyProps } from '@mui/material';
+import * as Styled from './styles';
 
 const TitleText = ({ children, ...props }: TypographyProps) => {
 	return (
-		<Typography {...props}>
+		<Styled.Title {...props}>
 			{children}
-		</Typography>
+		</Styled.Title>
 	);
 };
 

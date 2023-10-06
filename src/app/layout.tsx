@@ -4,8 +4,12 @@ import '../styles/global.css';
 import Toaster from '@/components/toaster';
 import ProtectRoute from '@/utils/hooks/protectRoute';
 import AuthProvider from '@/contexts/auth';
+import PostProvider from '@/contexts/post';
 
-const lexend = Lexend({ subsets: ['latin'] });
+const lexend = Lexend({
+	subsets: ['latin'],
+	weight: ['300', '500', '700'],
+});
 
 export const metadata: Metadata = {
 	title: 'My Blog',
@@ -22,7 +26,9 @@ export default function RootLayout({
 			<body className={lexend.className}>
 				<Toaster />
 				<AuthProvider>
-					<ProtectRoute>{children}</ProtectRoute>
+					<PostProvider>
+						<ProtectRoute>{children}</ProtectRoute>
+					</PostProvider>
 				</AuthProvider>
 			</body>
 		</html>
