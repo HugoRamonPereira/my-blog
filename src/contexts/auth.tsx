@@ -9,7 +9,7 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-interface SessionProps {
+export interface SessionProps {
   access_token?: string;
   data?: {
     fullName: string;
@@ -53,7 +53,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 		} catch (error) {
 			setSession({});
 			setIsLoading(false);
-		}finally{
+		} finally {
 			setIsLoading(false);
 		}
 	}, []);

@@ -7,6 +7,7 @@ import InputBase from '@/components/form/inputs/inputBase';
 import InputPassword from '@/components/form/inputs/inputPassword';
 import TitleText from '@/components/titleText';
 import useHttp from '@/services/useHttp';
+import LoginIcon from '@mui/icons-material/Login';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -79,6 +80,7 @@ export default function SignIn() {
 				size='large'
 				type='submit'
 				disabled={isLoading}
+				endIcon={<LoginIcon />}
 			>
           Sign in
 			</CustomButton>

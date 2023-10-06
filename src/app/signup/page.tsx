@@ -5,13 +5,13 @@ import CustomButton from '@/components/form/buttons/button';
 import CustomLink from '@/components/form/buttons/link';
 import InputBase from '@/components/form/inputs/inputBase';
 import InputPassword from '@/components/form/inputs/inputPassword';
-import TitleText from '@/components/titleText';
 import useHttp from '@/services/useHttp';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
+import * as Styled from './styles';
 
 interface SignUpProps {
   fullName: string;
@@ -61,14 +61,11 @@ export default function SignUp() {
 		<Form
 			onSubmit={handleSubmit(onSubmit)}
 		>
-			<TitleText
+			<Styled.Title
 				variant="h4"
-				sx={{
-					marginBottom: '1rem'
-				}}
 			>
         Create your account
-			</TitleText>
+			</Styled.Title>
 			<InputBase
 				label='Full Name'
 				name='fullName'

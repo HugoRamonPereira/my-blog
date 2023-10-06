@@ -1,10 +1,11 @@
-import { Button, ButtonProps } from '@mui/material';
+import { ButtonProps } from '@mui/material';
+import * as Styled from './styles';
 
 const CustomButton = ({ children, ...props }: ButtonProps) => {
 	return (
-		<Button {...props}>
+		<Styled.CustomButton {...props}>
 			{children}
-		</Button>
+		</Styled.CustomButton>
 	);
 };
 

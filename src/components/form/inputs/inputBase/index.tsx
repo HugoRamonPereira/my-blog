@@ -1,5 +1,6 @@
-import TextField, { TextFieldProps } from '@mui/material/TextField';
+import { TextFieldProps } from '@mui/material/TextField';
 import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
+import * as Styled from './styles';
 
 export interface InputBaseProps<T extends FieldValues> {
   label?: string;
@@ -16,7 +17,7 @@ function InputBase<T extends FieldValues>({InputProps, type = 'text', label, ...
 		<Controller
 			{...props}
 			render={({ field }) => (
-				<TextField
+				<Styled.TextInput
 					variant='outlined'
 					inputProps={field}
 					InputProps={InputProps}

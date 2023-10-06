@@ -1,5 +1,6 @@
 'use client';
 
+import { useAuth } from '@/contexts/auth';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -20,6 +21,8 @@ interface UseHttpProps {
   url: string;
 }
 
+type AuthorizationHeaderProps = Partial<{ Authorization: string }>;
+
 enum Method { GET = 'GET', POST = 'POST', PUT = 'PUT', DELETE = 'DELETE' }
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -27,17 +30,31 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 function useHttp<T>({ url }: UseHttpProps) {
 	const [responseRequest, setResponseRequest] = useState<T | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
+	const { session } = useAuth();
 
 	function makeParams({params}:Pick<SendHttpRequestProps,'params'>){
 		if(!params) return '';
 
-		return Object.keys(params).reduce(function(acc,key,index){
+		return Object.keys(params).reduce(function(acc, key, index){
 			const value = params[key];
 			if(index ===0){
 				return `${acc}${key}=${value}`;
 			}
 			return `${acc}&${key}=${value}`;
 		},'?');
+	}
+
+	function handleAuthorization(): AuthorizationHeaderProps {
+		try {
+			const accessToken: string = session.access_token as string;
+			if(!!session && !!session.access_token) {
+				return { Authorization: `Bearer ${accessToken}` };
+			}
+			return {};
+		} catch (error) {
+			toast.error('Authorization denied');
+			return {};
+		}
 	}
 
 	async function sendHttpRequest({ body, method, pathParams, params }: SendHttpRequestProps){
@@ -51,6 +68,7 @@ function useHttp<T>({ url }: UseHttpProps) {
 				...requestBody,
 				headers: {
 					'Content-Type': 'application/json',
+					...handleAuthorization()
 				}
 			});
 
@@ -74,7 +92,7 @@ function useHttp<T>({ url }: UseHttpProps) {
 		}
 	}
 
-	async function Get({ params,pathParams }: Pick<SendHttpRequestProps,'params'|'pathParams'>){
+	async function Get({ params, pathParams }: Pick<SendHttpRequestProps,'params'|'pathParams'>){
 		const response = await sendHttpRequest({
 			method: Method.GET,
 			params,

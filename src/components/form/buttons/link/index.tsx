@@ -1,14 +1,19 @@
-import Link, {LinkProps} from 'next/link';
+import { LinkProps } from 'next/link';
+import * as Styled from './styles';
+import { ReactNode } from 'react';
 
 interface CustomLinkProps extends LinkProps {
-  children: string
+  children: ReactNode;
 }
 
 const CustomLink = ({ children, ...props }: CustomLinkProps) => {
 	return (
-		<Link {...props}>
+		<Styled.LinkCustom
+			{...props}
+			href='/signup'
+		>
 			{children}
-		</Link>
+		</Styled.LinkCustom>
 	);
 };
 
