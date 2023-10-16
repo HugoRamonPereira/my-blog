@@ -8,7 +8,7 @@ import PostProvider from '@/contexts/post';
 
 const lexend = Lexend({
 	subsets: ['latin'],
-	weight: ['300', '500', '700'],
+	weight: ['300', '400', '500', '700'],
 });
 
 export const metadata: Metadata = {

@@ -15,6 +15,7 @@ export interface SessionProps {
     fullName: string;
     username: string;
     email: string;
+    id: number;
   };
 }
 

@@ -1,4 +1,4 @@
-import { Container, Typography } from '@mui/material';
+import { Container, Dialog, IconButton, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 
 export const CommentContainer = styled(Container)({
@@ -6,7 +6,8 @@ export const CommentContainer = styled(Container)({
 	justifyContent: 'space-between',
 	border: '1px solid gray',
 	borderRadius: '0.2rem',
-	padding: '1rem 0'
+	padding: '1rem 0',
+	marginBottom: '0.8rem'
 });
 
 export const CommentInfo = styled(Container)({
@@ -21,12 +22,40 @@ export const CommentText = styled(Typography)({
 });
 
 export const CommentContainerDateTime = styled(Container)({
+	width: 216,
 	display: 'flex',
 	alignItems: 'center',
-	justifyContent: 'flex-end',
+	textAlign: 'center',
+	gap: '1rem'
 });
 
 export const CommentDateTime = styled(Typography)({
 	fontFamily: 'inherit',
-	fontWeight: 'lighter'
+	fontWeight: 'lighter',
+	width: 170
 });
+
+export const EditCommentContainer = styled(Container)({
+	width: 30,
+	marginRight: '1rem'
+});
+
+export const EditButton = styled(IconButton)({
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center'
+});
+
+export const ActionsText = styled(Typography)({
+	fontFamily: 'inherit',
+	marginLeft: '0.8rem'
+});
+
+export const EditDialog = styled(Dialog)(({ theme }) => ({
+	'& .MuiDialogContent-root': {
+		padding: theme.spacing(2),
+	},
+	'& .MuiDialogActions-root': {
+		padding: theme.spacing(1),
+	},
+}));
