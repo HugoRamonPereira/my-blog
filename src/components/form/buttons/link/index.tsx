@@ -2,7 +2,7 @@ import { LinkProps } from 'next/link';
 import * as Styled from './styles';
 import { ReactNode } from 'react';
 
-interface CustomLinkProps extends LinkProps {
+interface CustomLinkProps extends Omit<LinkProps, 'as'> {
   children: ReactNode;
 }
 

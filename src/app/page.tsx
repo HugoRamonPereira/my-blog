@@ -54,9 +54,6 @@ export default function SignIn() {
 		>
 			<TitleText
 				variant="h4"
-				sx={{
-					marginBottom: '1rem'
-				}}
 			>
           Welcome
 			</TitleText>
