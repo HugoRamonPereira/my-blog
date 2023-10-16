@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
+import * as Styled from './styles';
 
 interface PaginationProps {
   totalPages: number;
@@ -9,8 +9,10 @@ interface PaginationProps {
 
 export default function PaginationRounded({ totalPages, onChangePage }: PaginationProps) {
 	return (
-		<Stack spacing={2}>
+		<Styled.PaginationContainer
+			spacing={2}
+		>
 			<Pagination count={totalPages} variant="outlined" shape="rounded" onChange={(e, value) => onChangePage(value)} />
-		</Stack>
+		</Styled.PaginationContainer>
 	);
 }

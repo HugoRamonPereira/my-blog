@@ -10,7 +10,7 @@ interface FormProps {
 
 const Form = ({ children, ...props }: FormProps) => {
 	return (
-		<Container maxWidth="sm">
+		<Container maxWidth="sm" >
 			<Box
 				component="form"
 				{...props}

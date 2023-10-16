@@ -33,6 +33,10 @@ function Dashboard() {
 		getPosts(pageNumber);
 	}
 
+	function reloadPage() {
+		getPosts(params.current.page);
+	}
+
 	useEffect(() => {
 		getPosts();
 	}, []);
@@ -71,9 +75,12 @@ function Dashboard() {
 
 				{/* Comment Box */}
 				<Container>
-					{posts.map((post) => <Post {...post} key={post.id} />)}
+					{posts.map((post) => <Post {...post} key={post.id} reloadPage={reloadPage} />)}
 				</Container>
-				<PaginationRounded totalPages={totalPagesCount} onChangePage={onChangePage} />
+				<PaginationRounded
+					totalPages={totalPagesCount}
+					onChangePage={onChangePage}
+				/>
 			</Styled.CommentContainer>
 		</Styled.DashboardContainer>
 	);

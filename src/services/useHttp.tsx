@@ -37,7 +37,7 @@ function useHttp<T>({ url }: UseHttpProps) {
 
 		return Object.keys(params).reduce(function(acc, key, index){
 			const value = params[key];
-			if(index ===0){
+			if (index === 0){
 				return `${acc}${key}=${value}`;
 			}
 			return `${acc}&${key}=${value}`;
@@ -47,7 +47,7 @@ function useHttp<T>({ url }: UseHttpProps) {
 	function handleAuthorization(): AuthorizationHeaderProps {
 		try {
 			const accessToken: string = session.access_token as string;
-			if(!!session && !!session.access_token) {
+			if (!!session && !!session.access_token) {
 				return { Authorization: `Bearer ${accessToken}` };
 			}
 			return {};
@@ -62,6 +62,8 @@ function useHttp<T>({ url }: UseHttpProps) {
 			setIsLoading(true);
 			setResponseRequest(null);
 			const requestBody = body ? {body: JSON.stringify(body)} : {};
+
+			console.log('Body', body);
 
 			const response = await fetch(`${baseUrl}/${url}${pathParams? `/${pathParams}` : ''}${makeParams({params})}`,{
 				method: method,
@@ -92,7 +94,7 @@ function useHttp<T>({ url }: UseHttpProps) {
 		}
 	}
 
-	async function Get({ params, pathParams }: Pick<SendHttpRequestProps,'params'|'pathParams'>){
+	async function Get({ params, pathParams }: Pick<SendHttpRequestProps, 'params' | 'pathParams'>){
 		const response = await sendHttpRequest({
 			method: Method.GET,
 			params,
@@ -114,10 +116,25 @@ function useHttp<T>({ url }: UseHttpProps) {
 	// Put needs a pathParams and a body
 	// pathParams id of the post is gonna be altered
 	// body - pass the content to be altered
-	async function Put(){}
+	async function Put({ body, pathParams }: Pick<SendHttpRequestProps, 'body' | 'pathParams'>){
+		const response =  await sendHttpRequest({
+			method: Method.PUT,
+			body,
+			pathParams,
+		});
+
+		return response;
+	}
 
 	// Delete needs only pathParams which contains the id of the post to be deleted
-	async function Delete(){}
+	async function Delete({ pathParams }: Pick<SendHttpRequestProps, 'pathParams'>){
+		const response = await sendHttpRequest({
+			method: Method.DELETE,
+			pathParams
+		});
+
+		return response;
+	}
 
 	return {responseRequest, isLoading, Get, Post, Put, Delete};
 }

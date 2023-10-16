@@ -20,11 +20,13 @@ interface ContextPostProps {
   createPost(post: PostProps): void;
 	posts: Array<PostProps>;
   resetPosts(listPosts: ContextPostProps['posts']): void;
+  deletePost(id: Pick<PostProps, 'id'>): void;
 }
 
 const PostContext = createContext<ContextPostProps>({
 	createPost: () => void {},
 	resetPosts: () => void {},
+	deletePost: () => void {},
 	posts: [],
 });
 
@@ -41,8 +43,12 @@ function PostProvider({ children }: PostProviderProps) {
 		setPosts(listPosts);
 	}
 
+	function deletePost({ id }: Pick<PostProps, 'id'>) {
+		setPosts((prevState) => prevState.filter(post => post.id !== id));
+	}
+
 	return (
-		<PostContext.Provider value={{ posts, createPost, resetPosts }}>
+		<PostContext.Provider value={{ posts, createPost, resetPosts, deletePost }}>
 			{children}
 		</PostContext.Provider>
 	);
