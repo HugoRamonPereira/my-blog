@@ -1,7 +1,7 @@
 import { TypographyProps } from '@mui/material';
 import * as Styled from './styles';
 
-const TitleText = ({ children, ...props }: TypographyProps) => {
+const TitleText = ({ children, ...props }: Omit<TypographyProps, 'sx'>) => {
 	return (
 		<Styled.Title {...props}>
 			{children}
