@@ -18,8 +18,14 @@ function Dashboard() {
 	const { signOut } = useAuth();
 	const { posts, resetPosts } = usePost();
 	const { Get } = useHttp({ url: 'agenda/post' });
+	const { session } = useAuth();
+	const userName = session.data!.fullName;
 	const params = useRef({ page: 1, limit: 10, count: 1 });
 	const totalPagesCount = Math.ceil(params.current.count / params.current.limit);
+
+	function userNameCapitalized(username: string) {
+		return username.charAt(0).toUpperCase() + username.slice(1);
+	}
 
 	function getPosts(pageNumber?: number) {
 		Get({ params: {...params.current, ...(pageNumber ? {page: pageNumber} : {})}})
@@ -54,7 +60,7 @@ function Dashboard() {
 							alt="user profile picture"
 							src="https://www.mockofun.com/wp-content/uploads/2019/12/circle-profile-pic.jpg"
 						/>
-						<TitleText>Natalie</TitleText>
+						<TitleText>{userNameCapitalized(userName)}</TitleText>
 					</Styled.AvatarContainer>
 					<CustomButton
 						variant="contained"
