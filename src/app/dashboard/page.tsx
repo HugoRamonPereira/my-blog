@@ -13,11 +13,14 @@ import { usePost } from '@/contexts/post';
 import useHttp from '@/services/useHttp';
 import { useEffect, useRef } from 'react';
 import PaginationRounded from '@/components/pagination';
+import { userNameCapitalized } from '@/utils/userNameCapitalized';
 
 function Dashboard() {
 	const { signOut } = useAuth();
 	const { posts, resetPosts } = usePost();
 	const { Get } = useHttp({ url: 'agenda/post' });
+	const { session } = useAuth();
+	const userName = session.data!.fullName;
 	const params = useRef({ page: 1, limit: 10, count: 1 });
 	const totalPagesCount = Math.ceil(params.current.count / params.current.limit);
 
@@ -54,7 +57,7 @@ function Dashboard() {
 							alt="user profile picture"
 							src="https://www.mockofun.com/wp-content/uploads/2019/12/circle-profile-pic.jpg"
 						/>
-						<TitleText>Natalie</TitleText>
+						<TitleText>{userNameCapitalized(userName)}</TitleText>
 					</Styled.AvatarContainer>
 					<CustomButton
 						variant="contained"
