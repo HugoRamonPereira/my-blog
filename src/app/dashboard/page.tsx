@@ -13,6 +13,7 @@ import { usePost } from '@/contexts/post';
 import useHttp from '@/services/useHttp';
 import { useEffect, useRef } from 'react';
 import PaginationRounded from '@/components/pagination';
+import { userNameCapitalized } from '@/utils/userNameCapitalized';
 
 function Dashboard() {
 	const { signOut } = useAuth();
@@ -22,10 +23,6 @@ function Dashboard() {
 	const userName = session.data!.fullName;
 	const params = useRef({ page: 1, limit: 10, count: 1 });
 	const totalPagesCount = Math.ceil(params.current.count / params.current.limit);
-
-	function userNameCapitalized(username: string) {
-		return username.charAt(0).toUpperCase() + username.slice(1);
-	}
 
 	function getPosts(pageNumber?: number) {
 		Get({ params: {...params.current, ...(pageNumber ? {page: pageNumber} : {})}})
