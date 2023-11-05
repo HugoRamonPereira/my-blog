@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
-import { Lexend } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import '../styles/global.css';
 import Toaster from '@/components/toaster';
 import ProtectRoute from '@/utils/hooks/protectRoute';
 import AuthProvider from '@/contexts/auth';
 import PostProvider from '@/contexts/post';
+import ThemeRegistry from '@/components/themeRegistry/ThemeRegistry';
 
-const lexend = Lexend({
+const inter = Inter({
 	subsets: ['latin'],
 	weight: ['300', '400', '500', '700'],
 });
@@ -23,13 +24,15 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={lexend.className}>
-				<Toaster />
-				<AuthProvider>
-					<PostProvider>
-						<ProtectRoute>{children}</ProtectRoute>
-					</PostProvider>
-				</AuthProvider>
+			<body className={inter.className}>
+				<ThemeRegistry>
+					<Toaster />
+					<AuthProvider>
+						<PostProvider>
+							<ProtectRoute>{children}</ProtectRoute>
+						</PostProvider>
+					</AuthProvider>
+				</ThemeRegistry>
 			</body>
 		</html>
 	);

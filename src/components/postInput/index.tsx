@@ -1,4 +1,4 @@
-import { Box, InputAdornment, TextField } from '@mui/material';
+import { Box, InputAdornment } from '@mui/material';
 import UserAvatar from '../avatar';
 import CustomButton from '../form/buttons/button';
 import { useForm } from 'react-hook-form';
@@ -8,7 +8,7 @@ import useHttp from '@/services/useHttp';
 import { usePost } from '@/contexts/post';
 
 interface PostInputProps {
-  message: string;
+message: string;
 }
 
 function PostInput() {
@@ -18,15 +18,19 @@ function PostInput() {
 	const {
 		handleSubmit,
 		register,
+		reset,
 		formState: { isDirty, isValid }
 	} = useForm<PostInputProps>({ mode: 'onChange' });
 
 	async function onSubmit(data: PostInputProps) {
+		const newPost = {
+			message: data
+		};
 
 
-		const response = await Post({ body: {...data}});
-
+		const response = await Post({ body: { ...data } });
 		createPost(response.data);
+		reset();
 	}
 
 	return (
@@ -38,13 +42,16 @@ function PostInput() {
 				onSubmit={handleSubmit(onSubmit)}
 			>
 				<Styled.InputCommentBox direction="column">
-					<TextField
+					<Styled.InputTextField
 						multiline
 						rows={3}
 						{...register('message')}
 						InputProps={{
 							startAdornment: (
-								<InputAdornment position='start' sx={{ display: 'flex', alignItems: 'flex-end' }}>
+								<InputAdornment
+									position='start'
+									sx={{ display: 'flex', alignItems: 'flex-end' }}
+								>
 									<UserAvatar
 										alt="Natalia"
 										src="https://www.mockofun.com/wp-content/uploads/2019/12/circle-profile-pic.jpg"
@@ -52,14 +59,16 @@ function PostInput() {
 								</InputAdornment>
 							),
 							endAdornment: (
-								<InputAdornment position='end'>
+								<InputAdornment
+									position='end'
+								>
 									<CustomButton
-										variant="outlined"
+										variant="contained"
 										type="submit"
 										disabled={!isDirty || !isValid }
 										endIcon={<SendIcon />}
 									>
-                    Post
+                  Post
 									</CustomButton>
 								</InputAdornment>
 							)
@@ -70,5 +79,6 @@ function PostInput() {
 		</Styled.InputContainer>
 	);
 }
+
 
 export default PostInput;

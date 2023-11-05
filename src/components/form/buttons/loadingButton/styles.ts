@@ -1,7 +1,7 @@
-import { Button } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { styled } from '@mui/system';
 
-export const CustomButton = styled(Button)({
+export const LoadingBtn = styled(LoadingButton)({
 	padding: '0.8rem 2rem',
 	borderRadius: '1.5rem',
 	fontFamily: 'inherit',

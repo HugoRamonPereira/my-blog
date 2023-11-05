@@ -5,5 +5,6 @@ export const TextInput = styled(TextField)({
 	fontFamily: 'inherit',
 	display: 'flex',
 	flexDirection: 'column',
-	columnGap: '1rem'
+	columnGap: '1rem',
+	width: '100%'
 });

@@ -1,7 +1,6 @@
 'use client';
 
 import Form from '@/components/form';
-import CustomButton from '@/components/form/buttons/button';
 import CustomLink from '@/components/form/buttons/link';
 import InputBase from '@/components/form/inputs/inputBase';
 import InputPassword from '@/components/form/inputs/inputPassword';
@@ -13,6 +12,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-hot-toast';
 import { useAuth } from '@/contexts/auth';
+import { LoadingBtn } from '@/components/form/buttons/loadingButton';
+import Spinner from 'public/assets/loading-spinner.svg';
+import Image from 'next/image';
 
 interface SignInProps {
   username: string;
@@ -52,11 +54,7 @@ export default function SignIn() {
 		<Form
 			onSubmit={handleSubmit(onSubmit)}
 		>
-			<TitleText
-				variant="h4"
-			>
-          Welcome
-			</TitleText>
+			<TitleText>Welcome</TitleText>
 			<InputBase
 				label='Username'
 				name='username'
@@ -72,15 +70,16 @@ export default function SignIn() {
 			>
           Don&apos;t have an account?
 			</CustomLink>
-			<CustomButton
+			<LoadingBtn
 				variant="contained"
-				size='large'
 				type='submit'
-				disabled={isLoading}
+				size='large'
+				loading={isLoading}
+				loadingIndicator={<Image src={Spinner} width={25} height={25} alt='spinner' />}
 				endIcon={<LoginIcon />}
 			>
-          Sign in
-			</CustomButton>
+				Sign in
+			</LoadingBtn>
 		</Form>
 	);
 }

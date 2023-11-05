@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { blue } from '@mui/material/colors';
 
 export const PaperForm = styled(Paper)({
-	background: blue[100],
+	background: blue[50],
 	display: 'flex',
 	flexDirection: 'column',
 	alignItems: 'center',

@@ -12,7 +12,13 @@ export default function PaginationRounded({ totalPages, onChangePage }: Paginati
 		<Styled.PaginationContainer
 			spacing={2}
 		>
-			<Pagination count={totalPages} variant="outlined" shape="rounded" onChange={(e, value) => onChangePage(value)} />
+			<Pagination
+				count={totalPages}
+				variant="outlined"
+				shape="rounded"
+				onChange={(e, value) => onChangePage(value)}
+				color='primary'
+			/>
 		</Styled.PaginationContainer>
 	);
 }

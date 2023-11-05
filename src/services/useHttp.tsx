@@ -63,8 +63,6 @@ function useHttp<T>({ url }: UseHttpProps) {
 			setResponseRequest(null);
 			const requestBody = body ? {body: JSON.stringify(body)} : {};
 
-			console.log('Body', body);
-
 			const response = await fetch(`${baseUrl}/${url}${pathParams? `/${pathParams}` : ''}${makeParams({params})}`,{
 				method: method,
 				...requestBody,
