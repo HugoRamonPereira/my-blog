@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google';
 import { createTheme } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
+import { red, deepPurple } from '@mui/material/colors';
 
 export const inter = Inter({
 	weight: ['300', '400', '500', '700'],
@@ -12,10 +12,9 @@ export const inter = Inter({
 const theme = createTheme({
 	palette: {
 		primary: {
-			main: '#672db9',
-		},
-		secondary: {
-			main: '#E95793',
+			main: deepPurple.A400,
+			light: deepPurple.A200,
+			dark: deepPurple.A700
 		},
 		error: {
 			main: red.A400,

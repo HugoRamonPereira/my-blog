@@ -9,7 +9,7 @@ import CustomButton from '@/components/form/buttons/button';
 import PostInput from '@/components/postInput';
 import PaginationRounded from '@/components/pagination';
 import { Post } from '@/components/post/post';
-import { Container, Divider, Typography } from '@mui/material';
+import { Container, Divider, Stack, Typography } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
 import * as Styled from './styles';
@@ -65,7 +65,7 @@ function Dashboard() {
 					</Styled.DashboardTitle>
 				</Styled.DashboardName>
 
-				<Styled.DashboardInfo direction="row" spacing={5}>
+				<Stack direction="row" spacing={5}>
 					<Styled.AvatarContainer>
 						<UserAvatar
 							alt="user profile picture"
@@ -80,7 +80,7 @@ function Dashboard() {
 					>
             Log out
 					</CustomButton>
-				</Styled.DashboardInfo>
+				</Stack>
 			</Styled.HeaderContainer>
 
 			<Styled.DividerContainer>

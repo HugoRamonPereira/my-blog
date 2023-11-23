@@ -1,5 +1,4 @@
 import { Container } from '@mui/material';
-import { Box } from '@mui/material';
 import { ReactNode } from 'react';
 import * as Styled from './styles';
 
@@ -11,20 +10,14 @@ interface FormProps {
 const Form = ({ children, ...props }: FormProps) => {
 	return (
 		<Container maxWidth="sm" >
-			<Box
+			<Styled.FormBox
 				component="form"
 				{...props}
-				sx={{
-					'& .MuiTextField-root': {
-						m: 1,
-						width: '35ch'
-					},
-				}}
 			>
 				<Styled.PaperForm>
 					{children}
 				</Styled.PaperForm>
-			</Box>
+			</Styled.FormBox>
 		</Container>
 	);
 };

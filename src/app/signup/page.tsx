@@ -1,7 +1,6 @@
 'use client';
 
 import Form from '@/components/form';
-import CustomButton from '@/components/form/buttons/button';
 import CustomLink from '@/components/form/buttons/link';
 import InputBase from '@/components/form/inputs/inputBase';
 import InputPassword from '@/components/form/inputs/inputPassword';
@@ -12,6 +11,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import * as Styled from './styles';
+import { LoadingBtn } from '@/components/form/buttons/loadingButton';
+import Spinner from '@/assets/loading-spinner.svg';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import Image from 'next/image';
+import { useEffect } from 'react';
 
 interface SignUpProps {
   fullName: string;
@@ -33,9 +37,8 @@ const signUpFormSchema = z.object({
 });
 
 export default function SignUp() {
-	const { Post, isLoading } = useHttp({ url: 'auth/signUp' });
 	const router = useRouter();
-	const { handleSubmit, control, reset } = useForm<SignUpProps>({
+	const { handleSubmit, control, reset, setError } = useForm<SignUpProps>({
 		resolver: zodResolver(signUpFormSchema),
 		defaultValues: {
 			fullName: 'ramon',
@@ -45,6 +48,15 @@ export default function SignUp() {
 			confirmPassword: '0123456789'
 		}
 	});
+
+	useEffect(() => {
+		setError('password', {
+			type: 'manual',
+			message: 'Dont Forget Your Username Should Be Cool!',
+		});
+	}, [setError]);
+
+	const { Post, isLoading } = useHttp({ url: 'auth/signUp', setError: (name, error) => setError(name, error)});
 
 	async function onSubmit(data: SignUpProps){
 		const response = await Post({ body: {...data} });
@@ -64,7 +76,7 @@ export default function SignUp() {
 			<Styled.Title
 				variant="h4"
 			>
-        Create your account
+        New account
 			</Styled.Title>
 			<InputBase
 				label='Full Name'
@@ -91,14 +103,18 @@ export default function SignUp() {
 				name='confirmPassword'
 				control={control}
 			/>
-			<CustomButton
+			<LoadingBtn
+				disableRipple
+				disableElevation
 				variant="contained"
 				size='large'
 				type='submit'
-				disabled={isLoading}
+				loading={isLoading}
+				loadingIndicator={<Image src={Spinner} width={25} height={25} alt='spinner' />}
+				endIcon={<PersonAddAlt1Icon />}
 			>
-            Sign up
-			</CustomButton>
+        Sign up
+			</LoadingBtn>
 			<CustomLink
 				href='/'
 			>

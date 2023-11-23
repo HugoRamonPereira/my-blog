@@ -6,6 +6,6 @@ export const LoadingBtn = styled(LoadingButton)({
 	borderRadius: '1.5rem',
 	fontFamily: 'inherit',
 	fontWeight: 'light',
-	width: '80%',
+	width: '77%',
 	margin: '1.5rem 0'
 });

@@ -1,16 +1,16 @@
-import { LinkProps } from 'next/link';
 import * as Styled from './styles';
-import { ReactNode } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 
-interface CustomLinkProps extends Omit<LinkProps, 'as'> {
+interface CustomLinkProps extends PropsWithChildren {
   children: ReactNode;
+  href: string;
 }
 
-const CustomLink = ({ children, ...props }: CustomLinkProps) => {
+const CustomLink = ({ children, href, ...props }: CustomLinkProps) => {
 	return (
 		<Styled.LinkCustom
 			{...props}
-			href='/signup'
+			href={href}
 		>
 			{children}
 		</Styled.LinkCustom>

@@ -3,7 +3,6 @@ import * as Styled from './styles';
 import { useAuth } from '@/contexts/auth';
 import {
 	Avatar,
-	DialogTitle,
 	Divider,
 	IconButton,
 	ListItemIcon,
@@ -25,6 +24,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import InputEdit from '../form/inputs/inputEdit';
 import SaveIcon from '@mui/icons-material/Save';
+import Spinner from '@/assets/loading-spinner.svg';
+import Image from 'next/image';
 
 type PostEditProps = Pick<PostProps, 'message'>
 
@@ -215,9 +216,9 @@ export function Post({ id, message, date_created, id_creator, reloadPage, isLoad
 							}
 						}}
 					>
-						<DialogTitle id="edit-dialog">
+						<Styled.EditDialogTitle id="edit-dialog">
                 Edit post {id}
-						</DialogTitle>
+						</Styled.EditDialogTitle>
 						<Divider />
 						<IconButton
 							aria-label="close"
@@ -243,10 +244,13 @@ export function Post({ id, message, date_created, id_creator, reloadPage, isLoad
 								}}
 							/>
 							<Styled.SaveEditButton
-								autoFocus
+								disableRipple
+								disableElevation
+								variant="contained"
 								type='submit'
-								variant='contained'
-								disabled={isLoadingEdit}
+								size='large'
+								loading={isLoadingEdit}
+								loadingIndicator={<Image src={Spinner} width={25} height={25} alt='spinner' />}
 								startIcon={<SaveIcon />}
 							>
                 Save changes

@@ -23,10 +23,6 @@ function PostInput() {
 	} = useForm<PostInputProps>({ mode: 'onChange' });
 
 	async function onSubmit(data: PostInputProps) {
-		const newPost = {
-			message: data
-		};
-
 
 		const response = await Post({ body: { ...data } });
 		createPost(response.data);

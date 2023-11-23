@@ -24,7 +24,7 @@ interface ContextProps {
   signOut: () => void;
   session: SessionProps;
   isLoggedUser: boolean;
-  isLoading:boolean;
+  isLoading: boolean;
 }
 
 const AuthContext = createContext<ContextProps>({
@@ -32,7 +32,7 @@ const AuthContext = createContext<ContextProps>({
 	signOut: function (): void {},
 	session: {},
 	isLoggedUser: false,
-	isLoading:true,
+	isLoading: true,
 });
 
 function AuthProvider({ children }: AuthProviderProps) {

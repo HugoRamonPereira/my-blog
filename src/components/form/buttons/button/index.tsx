@@ -4,7 +4,11 @@ import * as Styled from './styles';
 
 export default function CustomButton({ children, ...props }: Omit<ButtonProps, 'sx'>){
 	return (
-		<Styled.CustomButton {...props}>
+		<Styled.CustomButton
+			{...props}
+			disableRipple
+			disableElevation
+		>
 			<>{children}</>
 		</Styled.CustomButton>
 	);

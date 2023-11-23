@@ -1,4 +1,5 @@
-import { Button, Container, Dialog, IconButton, Stack, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { Container, Dialog, DialogTitle, IconButton, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 
 export const CommentContainer = styled(Container)({
@@ -13,8 +14,8 @@ export const CommentContainer = styled(Container)({
 export const CommentInfo = styled(Container)({
 	alignItems: 'center',
 	display: '-webkit-box',
-	'-webkit-line-clamp': '3',
-	'-webkit-box-orient': 'vertical',
+	'WebkitLineClamp': '3',
+	'WebkitBoxOrient': 'vertical',
 	overflow: 'hidden',
 	textOverflow: 'ellipsis',
 	wordBreak: 'break-all'
@@ -67,12 +68,22 @@ export const EditDialog = styled(Dialog)(({ theme }) => ({
 	}
 }));
 
-export const SaveEditButton = styled(Button)({
+export const EditDialogTitle = styled(DialogTitle)(({ theme }) => ({
+	fontWeight: 'bold',
+	color: theme.palette.primary.main,
+}));
+
+export const SaveEditButton = styled(LoadingButton)(({ theme }) => ({
+	backgroundColor: theme.palette.primary.main,
 	padding: '0.8rem 2rem',
 	display: 'flex',
 	alignSelf: 'flex-end',
-	borderRadius: '1.5rem'
-});
+	borderRadius: '1.5rem',
+
+	'&:hover': {
+		backgroundColor: theme.palette.primary.dark,
+	}
+}));
 
 export const DisabledButton = styled('span')({
 	cursor: 'not-allowed'

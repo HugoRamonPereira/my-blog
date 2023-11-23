@@ -13,7 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-hot-toast';
 import { useAuth } from '@/contexts/auth';
 import { LoadingBtn } from '@/components/form/buttons/loadingButton';
-import Spinner from 'public/assets/loading-spinner.svg';
+import Spinner from '@/assets/loading-spinner.svg';
 import Image from 'next/image';
 
 interface SignInProps {
@@ -28,14 +28,15 @@ const signInFormSchema = z.object({
 
 export default function SignIn() {
 	const auth = useAuth();
-	const { Post, isLoading } = useHttp({ url: 'auth/signIn' });
-	const { handleSubmit, control, reset } = useForm<SignInProps>({
+	const { handleSubmit, control, reset, setError } = useForm<SignInProps>({
 		resolver: zodResolver(signInFormSchema),
 		defaultValues: {
 			username: 'caioluan010',
 			password: 'Caio@123'
 		}
 	});
+	const { Post, isLoading } = useHttp({ url: 'auth/signIn', setError: setError });
+	console.log('setError:', setError);
 
 	async function onSubmit(data: SignInProps) {
 		const response = await Post({ body: {...data} });

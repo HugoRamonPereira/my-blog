@@ -33,15 +33,11 @@ export const DashboardName = styled(Stack)({
 	gap: '0.5rem'
 });
 
-export const DashboardInfo = styled(Stack)({
-
-});
-
 export const AvatarContainer = styled(Stack)({
 	display: 'flex',
 	flexDirection: 'row',
 	alignItems: 'center',
-	gap: '1rem'
+	gap: '0.5rem'
 });
 
 export const DividerContainer = styled(Container)({
