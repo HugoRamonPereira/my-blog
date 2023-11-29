@@ -59,8 +59,7 @@ export default function SignUp() {
   }, [setError]);
 
   const { Post, isLoading } = useHttp({
-    url: 'auth/signUp',
-    setError: (name, error) => setError(name, error)
+    url: 'auth/signUp'
   });
 
   async function onSubmit(data: SignUpProps) {
