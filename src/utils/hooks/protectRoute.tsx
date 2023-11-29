@@ -24,7 +24,13 @@ function ProtectRoute({ children }: ProtectRouteProps) {
 	}, [isLoggedUser, isLoading, pathname]);
 
 	if(isLoading){
-		return <div><center><span>Loading...</span></center></div>;
+		return (
+			<div>
+				<center>
+					<span>Loading...</span>
+				</center>
+			</div>
+		);
 	}
 
 	if (isLoggedUser || publicPages.includes(pathname)) {

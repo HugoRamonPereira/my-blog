@@ -5,5 +5,5 @@ export const PaginationContainer = styled(Stack)({
 	display: 'flex',
 	alignItems: 'center',
 	justifyContent: 'center',
-	marginTop: '1.5rem'
+	margin: '1rem 0 3rem'
 });

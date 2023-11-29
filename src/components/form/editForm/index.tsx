@@ -7,19 +7,19 @@ interface FormProps {
   onSubmit: () => void;
 }
 
-const Form = ({ children, ...props }: FormProps) => {
+const EditForm = ({ children, ...props }: FormProps) => {
 	return (
-		<Container maxWidth="sm" >
-			<Styled.FormBox
+		<Container>
+			<Styled.InputForm
 				component="form"
 				{...props}
 			>
 				<Styled.PaperForm>
 					{children}
 				</Styled.PaperForm>
-			</Styled.FormBox>
+			</Styled.InputForm>
 		</Container>
 	);
 };
 
-export default Form;
+export default EditForm;

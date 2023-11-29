@@ -3,6 +3,7 @@
 import { useAuth } from '@/contexts/auth';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { UseFormReturn } from 'react-hook-form';
 
 type Payload = Record<string, string | number | boolean>
 
@@ -14,10 +15,11 @@ interface SendHttpRequestProps {
 }
 
 interface ErrorResponse {
-  message: string
+  message: string;
+  field: string;
 }
 
-interface UseHttpProps {
+interface UseHttpProps extends Partial<Pick<UseFormReturn, 'setError'>> {
   url: string;
 }
 
@@ -27,7 +29,7 @@ enum Method { GET = 'GET', POST = 'POST', PUT = 'PUT', DELETE = 'DELETE' }
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-function useHttp<T>({ url }: UseHttpProps) {
+function useHttp<T>({ url, setError }: UseHttpProps) {
 	const [responseRequest, setResponseRequest] = useState<T | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const { session } = useAuth();
@@ -57,13 +59,26 @@ function useHttp<T>({ url }: UseHttpProps) {
 		}
 	}
 
+	async function handleError(errors: ErrorResponse[]) {
+		errors.forEach((error) => {
+			// setError && setError(error.field, { type: 'custom', message: error.message });
+			console.log('setError:', setError);
+			if (setError) {
+				// setError('password', { type: 'focus' }, { shouldFocus: true });
+				setError('password', {
+					type: 'manual',
+					message: 'Dont Forget Your Username Should Be Cool!',
+				});
+				console.log('error:', error);
+			}
+		});
+	}
+
 	async function sendHttpRequest({ body, method, pathParams, params }: SendHttpRequestProps){
 		try {
 			setIsLoading(true);
 			setResponseRequest(null);
 			const requestBody = body ? {body: JSON.stringify(body)} : {};
-
-			console.log('Body', body);
 
 			const response = await fetch(`${baseUrl}/${url}${pathParams? `/${pathParams}` : ''}${makeParams({params})}`,{
 				method: method,
@@ -76,6 +91,8 @@ function useHttp<T>({ url }: UseHttpProps) {
 
 			if(!response.ok) {
 				const responseJson = await response.json();
+				handleError(responseJson.data.errors);
+				console.log(responseJson.data.errors);
 				throw new Error(responseJson.message ||  responseJson.error);
 			}
 

@@ -1,14 +1,23 @@
 import { styled } from '@mui/system';
-import { Container, Stack } from '@mui/material';
+import { Container, Stack, Typography } from '@mui/material';
 
 export const DashboardContainer = styled(Container)({
 	display: 'flex',
 	flexDirection: 'column',
 	alignItems: 'center',
-	// backgroundColor: 'red',
 	width: '100vw',
 	height: '100vh'
 });
+
+export const DashboardTitle = styled(Typography)(({ theme }) => ({
+	fontFamily: 'inherit',
+	fontSize: '1.3rem',
+	fontWeight: 'bold',
+	display: 'flex',
+	gap: '0.5rem',
+	color: theme.palette.primary.main,
+}));
+
 
 export const HeaderContainer = styled(Container)({
 	display: 'flex',
@@ -17,18 +26,18 @@ export const HeaderContainer = styled(Container)({
 });
 
 export const DashboardName = styled(Stack)({
-	alignSelf: 'center'
-});
-
-export const DashboardInfo = styled(Stack)({
-
+	display: 'flex',
+	flexDirection: 'row',
+	alignItems: 'center',
+	justifyContent: 'center',
+	gap: '0.5rem'
 });
 
 export const AvatarContainer = styled(Stack)({
 	display: 'flex',
 	flexDirection: 'row',
 	alignItems: 'center',
-	gap: '1rem'
+	gap: '0.5rem'
 });
 
 export const DividerContainer = styled(Container)({
