@@ -67,8 +67,8 @@ export function Post({
   const [anchor, setAnchor] = useState<null | HTMLElement>(null);
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [postComments, setPostComments] = useState<CommentProps[]>([]);
-  // Make a ref for postHasComments to avoid Derived State
   const [commentsVisible, setCommentsVisible] = useState(false);
+  const { Delete: DeleteComment } = useHttp({ url: 'comment' });
   const open = Boolean(anchor);
   const currentDate = new Date(date_created);
   const formattedPostDateTimeToNow = formatDistanceToNow(currentDate, {
@@ -96,6 +96,20 @@ export function Post({
 
   function handleCloseEditDialog() {
     setOpenEditDialog(false);
+  }
+
+  async function deleteCommentFromPost(id: number) {
+    try {
+      const response = await DeleteComment({ pathParams: id.toString() });
+      if (response) {
+        setPostComments((comments) =>
+          comments.filter((comment) => comment.id !== id)
+        );
+        toast.success(`Comment ${id} deleted successfully!`);
+      }
+    } catch (error) {
+      toast.error('Comment could not be deleted!');
+    }
   }
 
   async function onSubmitPost({ message: messageEdit }: PostEditProps) {
@@ -301,7 +315,11 @@ export function Post({
         <Styled.CommentsListContainer>
           {hasComments ? (
             postComments.map((comment) => (
-              <Comment key={comment.id} {...comment} />
+              <Comment
+                key={comment.id}
+                {...comment}
+                onDelete={deleteCommentFromPost}
+              />
             ))
           ) : (
             <p>This post has no comments yet</p>
